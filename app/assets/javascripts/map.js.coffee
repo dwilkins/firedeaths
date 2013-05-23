@@ -156,7 +156,7 @@
       iconAnchor: [15,15]
     (jQuery.get) '/demise/index.json', (data) =>
       heat_data = []
-      for bi in data when bi
+      for bi in data when bi && bi.death_toll > 0
         heat_data.push
           lat: bi.base.game_lat
           lon: bi.base.game_lon
