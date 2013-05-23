@@ -178,7 +178,7 @@
         ###
         reason_cb = $('#r_' + dt.r + ':checked').length
         weapon_cb = $('#w_' + dt.w + ':checked').length
-        if $('#r_' + dt.r + ':checked').length > 0 && (dt.w + ':checked').length > 0
+        if ($('#r_' + dt.r + ':checked').length > 0) && ($('#w_' + dt.w + ':checked').length > 0)
           base_total += dt.v
       heat_data.push
         lat: bi.base.game_lat
