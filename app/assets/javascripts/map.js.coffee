@@ -2,16 +2,15 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
-  heat_spots = [
-    {lat: 500, lon: 2500, radius: 100, intensity: .2}
-    {lat: 19, lon: 54, radius: 100, intensity: 10}
-    {lat: 90, lon: 54, radius: 100, intensity: .90}
-    {lat: 500, lon: 54, radius: 100, intensity: .90}
-  ]
   heat = ""
   heat_marker = ""
   naturalZoom = 4
   map = ""
+  weapons = []
+  reasons = []
+  base_info = []
+  heat_spots = []
+
   L.Projection.Identity =
     project: (latlng) =>
       return new L.Point latlng.lat, latlng.lng
@@ -149,6 +148,50 @@
     map_init()
     fetch_map_data();
 
+  build_weapons = ->
+    weapons_holder = $('#weapons')
+    for w in weapons when w
+      weapons_holder.append (($ "<label class=\"checkbox pull-left\" for=\"w_#{w.id}\">#{w.name}</label>").append)("<input type=\"checkbox\" class=\"weapons-cb\" name=\"wn_#{w.id}\" value=\"#{w.id}\" checked=\"checked\" id=\"w_#{w.id}\" />").click =>
+        build_heatmap()
+  build_reasons = ->
+    reasons_holder = $('#reasons')
+    for r in reasons when r
+      reasons_holder.append (($ "<label class=\"checkbox pull-left\" for=\"r_#{r.id}\">#{r.name}</label>").append)("<input type=\"checkbox\" class=\"reasons-cb\" name=\"wn_#{r.id}\" value=\"#{r.id}\" checked=\"checked\" id=\"r_#{r.id}\" />").click =>
+        build_heatmap()
+
+  build_heatmap = ->
+    heat_data = []
+    for bi in base_info when bi
+      base_total = 0
+      heat_data_point = []
+      heat_data_point['base'] = bi.base
+      heat_data_point['weapons'] = []
+      heat_data_point['reasons'] = []
+      for dt in bi.death_toll when dt
+        ###
+        if dt.w? && $('#w_' + dt.w + ':checked').length > 0
+          heat_data_point['weapons'][dt.w] ?= 0
+          heat_data_point['weapons'][dt.w] += dt.v
+        if dt.r? && $('#r_' + dt.r + ':checked').length > 0
+          heat_data_point['reasons'][dt.r] ?= 0
+          heat_data_point['reasons'][dt.r] += dt.v
+        ###
+        reason_cb = $('#r_' + dt.r + ':checked').length
+        weapon_cb = $('#w_' + dt.w + ':checked').length
+        if $('#r_' + dt.r + ':checked').length > 0 && (dt.w + ':checked').length > 0
+          base_total += dt.v
+      heat_data.push
+        lat: bi.base.game_lat
+        lon: bi.base.game_lon
+        value: base_total
+        detail_data: heat_data_point
+      if !heat_spots[bi.base.id]
+        heat_spots[bi.base.id] = new L.Marker([bi.base.game_lat, bi.base.game_lon],{icon: heat_marker, opacity: .5,zIndex: 50, title: bi.base.name + "\nDeaths: " + base_total})
+        heat_spots[bi.base.id].addTo(map)
+      else
+        heat_spots[bi.base.id].title = bi.base.name + "\nDeaths: " + base_total
+    heat.setData heat_data
+    heat.redraw()
 
   fetch_map_data = ->
     heat_marker = new L.Icon
@@ -156,12 +199,14 @@
       iconAnchor: [15,15]
     (jQuery.get) '/demise/index.json', (data) =>
       heat_data = []
-      for bi in data when bi && bi.death_toll > 0
-        heat_data.push
-          lat: bi.base.game_lat
-          lon: bi.base.game_lon
-          value: bi.death_toll
-        m = new L.Marker([bi.base.game_lat, bi.base.game_lon],{icon: heat_marker, opacity: .5,zIndex: 50, title: bi.base.name + "\nDeaths: " + bi.death_toll})
-        m.addTo(map)
-      heat.setData heat_data
-      heat.redraw();
+      for w in data.weapons when w
+        weapons[w.id] = w
+      for r in data.reasons when r
+        reasons[r.id] = r
+      base_info = data.base_detail
+      build_weapons()
+      build_reasons()
+      build_heatmap()
+
+
+

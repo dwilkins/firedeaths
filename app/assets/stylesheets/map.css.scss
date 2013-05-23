@@ -8,6 +8,21 @@ html, body {
     width: 100%;
 }
 
+#weapons, #reasons {
+    clear: both;
+    @extend .span12;
+    .row-header {
+        width: 150px;
+        display: inline-block;
+        float: left;
+        font-weight: bold;
+    }
+}
+label {
+    margin-left: 5px;
+}
+
+
 #map {
     height: 80%;
     width: 100%;
