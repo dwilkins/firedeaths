@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  game_lat: 1
+  game_lon: 1
+  name: MyString
+
+two:
+  game_lat: 1
+  game_lon: 1
+  name: MyString

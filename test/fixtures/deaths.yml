@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  user_id: 1
+  death_reason_id: 1
+  weapon_id: 1
+  death_game_lat: 1
+  death_game_lon: 1
+  death_day: 2013-05-22
+  death_time: 2013-05-22 23:16:56
+
+two:
+  user_id: 1
+  death_reason_id: 1
+  weapon_id: 1
+  death_game_lat: 1
+  death_game_lon: 1
+  death_day: 2013-05-22
+  death_time: 2013-05-22 23:16:56
