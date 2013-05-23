@@ -1,29 +1,34 @@
-== Firedeaths app
+## Firedeaths app
 
-Getting Started...
+### Getting Started...
 
-Clone this repo
+* Clone this repo
 
-Make a database and a user:
+* Make a database and a user:
 
 
 ```
-create database firedeaths_development;
+create database firedeaths\_development;
 create user 'firedeaths'@'localhost' identified by 'firedeaths';
-grant all privileges on firedeaths_development.* to 'firedeaths'@'localhost';
+grant all privileges on firedeaths\_development.* to 'firedeaths'@'localhost';
 ```
 
-Run some Rake Tasks:
+* Run some Rake Tasks:
 
 ```
 rake db:migrate db:seed generate:deaths
 ```
 
 Back to the database to generate lots of deaths (you can run this command a bunch).   The distance.sql
-populates the base_id column of the deaths table
+populates the base\_id column of the deaths table
 
 ```
-insert into deaths (user_id, base_id, death_reason_id, weapon_id, death_game_lat, death_game_lon, death_day, death_time, created_at, updated_at) select user_id, base_id, death_reason_id, weapon_id, death_game_lat, death_game_lon, death_day, death_time, created_at, updated_at from deaths;
+insert into deaths (user\_id, base\_id, death\_reason\_id, weapon\_id,
+                    death\_game\_lat, death\_game\_lon, death\_day, death\_time,
+                    created\_at, updated\_at)
+select             user\_id, base\_id, death\_reason\_id, weapon\_id,
+                   death\_game\_lat, death\_game\_lon, death\_day, death\_time,
+                   created\_at, updated\_at from deaths;
 ...
 
 source doc/distance.sql
