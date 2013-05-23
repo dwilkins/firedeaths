@@ -164,3 +164,4 @@
         m = new L.Marker([bi.base.game_lat, bi.base.game_lon],{icon: heat_marker, opacity: .5,zIndex: 50, title: bi.base.name + "\nDeaths: " + bi.death_toll})
         m.addTo(map)
       heat.setData heat_data
+      heat.redraw();
