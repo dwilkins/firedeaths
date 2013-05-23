@@ -141,7 +141,8 @@
       .setContent("You clicked the map at " + e.latlng.toString())
       .openOn(map)
 
-    map.on 'click', onMapClick
+# Debugging map points...
+#    map.on 'click', onMapClick
 
 
   jQuery ->
