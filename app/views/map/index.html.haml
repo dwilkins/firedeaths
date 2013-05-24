@@ -4,11 +4,26 @@
   .row-header Deadly Weapons
   %form{class: 'form-inline'}
     #weapons-detail
+      - if @static_data[:weapons]
+        %label{class: "checkbox pull-left", for: "weapons-all"}
+          All
+          %input{type: "checkbox", class: "weapons-all-cb", name: "weapons-all", value: "All", checked: "checked", id: "weapons-all"}
+      - @static_data[:weapons].each do |w|
+        %label{class: "checkbox pull-left", for: "w_#{w.id}"}
+          #{w.name}
+          %input{type: "checkbox", class: "weapons-cb", name: "wn_#{w.id}", value: "#{w.id}", checked: "checked", id: "w_#{w.id}"}
+
 #reasons
   .row-header Death Reasons
   %form{class: 'form-inline'}
     #reasons-detail
-
+      - if @static_data[:reasons]
+        %label{class: "checkbox pull-left", for: "reasons-all"}
+          All
+          %input{type: "checkbox", class: "reasons-all-cb", name: "reasons-all", value: "All", checked: "checked", id: "reasons-all"}
+      - @static_data[:reasons].each do |r|
+        %label{class: "checkbox pull-left", for: "rb_#{r.id}"}
+          #{r.name}
+          %input{type: "checkbox", class: "reasons-cb", name: "rn_#{r.id}", value: "#{r.id}", checked: "checked", id: "r_#{r.id}"}
 
 #map
-

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130523135744) do
+ActiveRecord::Schema.define(:version => 20130524165258) do
 
   create_table "bases", :force => true do |t|
     t.integer  "game_lat"
@@ -28,16 +28,14 @@ ActiveRecord::Schema.define(:version => 20130523135744) do
   end
 
   create_table "deaths", :force => true do |t|
-    t.integer  "user_id"
-    t.integer  "base_id"
-    t.integer  "death_reason_id"
-    t.integer  "weapon_id"
-    t.integer  "death_game_lat"
-    t.integer  "death_game_lon"
-    t.date     "death_day"
-    t.time     "death_time"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+    t.integer "user_id"
+    t.integer "base_id"
+    t.integer "death_reason_id"
+    t.integer "weapon_id"
+    t.integer "death_game_lat"
+    t.integer "death_game_lon"
+    t.date    "death_day"
+    t.time    "death_time"
   end
 
   add_index "deaths", ["base_id", "death_reason_id"], :name => "index_deaths_on_base_id_and_death_reason_id"

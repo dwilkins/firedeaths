@@ -137,25 +137,28 @@
     fetch_map_data()
 
   build_weapons = =>
-    weapons_holder = $('#weapons')
-    for w in window.weapons when w
-      weapons_holder.append (($ "<label class=\"checkbox pull-left\" for=\"w_#{w.id}\">#{w.name}</label>").append)("<input type=\"checkbox\" class=\"weapons-cb\" name=\"wn_#{w.id}\" value=\"#{w.id}\" checked=\"checked\" id=\"w_#{w.id}\" />").click =>
-        build_heatmap()
+    ($ ".weapons-cb").click =>
+      build_heatmap()
+    ($ "#weapons-all").click =>
+      ($ ".weapons-cb").prop "checked", ($ "#weapons-all").prop "checked"
+      build_heatmap()
+
   build_reasons = =>
-    reasons_holder = $('#reasons')
-    for r in window.reasons when r
-      reasons_holder.append (($ "<label class=\"checkbox pull-left\" for=\"r_#{r.id}\">#{r.name}</label>").append)("<input type=\"checkbox\" class=\"reasons-cb\" name=\"wn_#{r.id}\" value=\"#{r.id}\" checked=\"checked\" id=\"r_#{r.id}\" />").click =>
-        build_heatmap()
+    ($ ".reasons-cb").click =>
+      build_heatmap()
+    ($ "#reasons-all").click =>
+      ($ ".reasons-cb").prop "checked", ($ "#reasons-all").prop "checked"
+      build_heatmap()
 
   build_heatmap = =>
     window.heat_data = []
     for w in window.weapons when w
-      if ($("#w_#{w.id}:checked").length > 0)
+      if $("#w_#{w.id}").prop 'checked'
         w.is_checked = true
       else
         w.is_checked = false
     for r in window.reasons when r
-      if ($("#r_#{r.id}:checked").length > 0)
+      if $("#r_#{r.id}").prop 'checked'
         r.is_checked = true
       else
         r.is_checked = false
@@ -174,7 +177,9 @@
           heat_data_point['reasons'][dt.r] ?= 0
           heat_data_point['reasons'][dt.r] += dt.v
         ###
-        if window.reasons[dt.r]? && window.weapons[dt.w]? && window.reasons[dt.r].is_checked? == true && window.weapons[dt.w].is_checked? == true
+        if window.reasons[dt.r]? && window.weapons[dt.w]? && window.reasons[dt.r].is_checked? &&
+           window.reasons[dt.r].is_checked == true && window.weapons[dt.w].is_checked? &&
+           window.weapons[dt.w].is_checked == true
           base_total += dt.v
       window.heat_data.push
         lat: bi.base.game_lat
