@@ -12,7 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require  map
-//= require ./heatmap/heatmap
-//= require ./heatmap/heatmap-leaflet
-//= require ./heatmap/QuadTree
+//= require map
+//= require heatmap/heatmap
+//= require heatmap/heatmap-leaflet
+//= require heatmap/QuadTree
