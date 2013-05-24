@@ -174,7 +174,7 @@
           heat_data_point['reasons'][dt.r] ?= 0
           heat_data_point['reasons'][dt.r] += dt.v
         ###
-        if window.reasons[dt.r].is_checked && window.weapons[dt.w].is_checked
+        if window.reasons[dt.r]? && window.weapons[dt.w]? && window.reasons[dt.r].is_checked? == true && window.weapons[dt.w].is_checked? == true
           base_total += dt.v
       window.heat_data.push
         lat: bi.base.game_lat
