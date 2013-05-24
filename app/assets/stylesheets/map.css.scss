@@ -10,18 +10,39 @@ html, body {
 
 #weapons, #reasons {
     clear: both;
-    @extend .span12;
+    @extend .row;
     .row-header {
         width: 150px;
-        display: inline-block;
         float: left;
+        padding-left: 50px;
         font-weight: bold;
     }
-}
-label {
-    margin-left: 5px;
+    ul {
+        list-style: none;
+        display: inline;
+        li {
+            @extend .pull-left;
+            display: inline;
+        }
+    }
 }
 
+
+label {
+    margin-left: 10px;
+    float: left;
+    display: table-cell;
+    input {
+        float: left;
+    }
+}
+
+
+.page-container {
+    @extend .container;
+    height: 100%;
+    width: 100%;
+}
 
 #map {
     height: 80%;

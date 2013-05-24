@@ -5,25 +5,26 @@
   %form{class: 'form-inline'}
     #weapons-detail
       - if @static_data[:weapons]
-        %label{class: "checkbox pull-left", for: "weapons-all"}
-          All
+        %label{class: "checkbox inline", for: "weapons-all"}
           %input{type: "checkbox", class: "weapons-all-cb", name: "weapons-all", value: "All", checked: "checked", id: "weapons-all"}
-      - @static_data[:weapons].each do |w|
-        %label{class: "checkbox pull-left", for: "w_#{w.id}"}
-          #{w.name}
-          %input{type: "checkbox", class: "weapons-cb", name: "wn_#{w.id}", value: "#{w.id}", checked: "checked", id: "w_#{w.id}"}
+          All
+        - @static_data[:weapons].each do |w|
+          %label{class: "checkbox inline", for: "w_#{w.id}"}
+            %input{type: "checkbox", class: "weapons-cb", name: "wn_#{w.id}", value: "#{w.id}", checked: "checked", id: "w_#{w.id}"}
+            #{w.name}
 
 #reasons
   .row-header Death Reasons
   %form{class: 'form-inline'}
     #reasons-detail
       - if @static_data[:reasons]
-        %label{class: "checkbox pull-left", for: "reasons-all"}
-          All
+        %label{class: "checkbox inline", for: "reasons-all"}
           %input{type: "checkbox", class: "reasons-all-cb", name: "reasons-all", value: "All", checked: "checked", id: "reasons-all"}
+          All
       - @static_data[:reasons].each do |r|
-        %label{class: "checkbox pull-left", for: "rb_#{r.id}"}
-          #{r.name}
+        %label{class: "checkbox inline", for: "rb_#{r.id}"}
           %input{type: "checkbox", class: "reasons-cb", name: "rn_#{r.id}", value: "#{r.id}", checked: "checked", id: "r_#{r.id}"}
+          #{r.name}
+
 
 #map
