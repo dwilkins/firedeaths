@@ -11,6 +11,7 @@
   window.heat_spots = []
   window.heat_data = []
   window.weapons_cb = []
+  window.marker_titles = []
 
   L.Projection.Identity =
     project: (latlng) =>
@@ -39,22 +40,12 @@
         }
     })
     `
-  ###
-  L.CRS.Cartesian = L.extend {}, L.CRS
-    Cartesian: (e, c) ->
-      L.Util.setOptions(this, c)
-      this.unbounded = !0
-      this._bounds = e
-      a = e.max.x - e.min.x
-      r = e.max.y - e.min.y
-      n = this.options.falseEasting || 0
-      i = 0 + n / (1 * a)
-      s = this.options.falseNorthing || 0
-      l = 1 - s / (1 * r)
-      this.transformation = L.Transformation 1 / a, i, -1 / r, l
-      this.projection = L.Projection.Identity
-  ###
-
+  class DeathMarker extends L.Marker
+    setTitle: (title) =>
+      L.Util.setOptions(this, {title: title})
+      for a in this._icon.attributes when a
+        if a.name == "title"
+          a.value = a.nodeValue = a.textContent = title
 
   map_init = ->
     sc =
@@ -188,9 +179,9 @@
         detail_data: heat_data_point
       if !bi.old_base_total || bi.old_base_total != base_total
         if !window.heat_spots[bi.base.id]
-          window.heat_spots[bi.base.id] = L.marker([bi.base.game_lat, bi.base.game_lon],{icon: heat_marker, opacity: .5,zIndex: 50, title: bi.base.name + "\nDeaths: " + base_total}).addTo(window.map)
+          window.heat_spots[bi.base.id] = new DeathMarker([bi.base.game_lat, bi.base.game_lon],{icon: heat_marker, opacity: .5,zIndex: 50, title: "#{bi.base.name}\nDeaths: #{base_total}"}).addTo(window.map)
         else
-          window.heat_spots[bi.base.id].options.title = bi.base.name + "\nDeaths: " + base_total
+          window.heat_spots[bi.base.id].setTitle bi.base.name + "\nDeaths: " + base_total
         bi.old_base_total = base_total
     window.heat.setData window.heat_data
     window.heat.redraw()
