@@ -3,28 +3,44 @@
 #weapons
   .row-header Deadly Weapons
   %form{class: 'form-inline'}
-    #weapons-detail
-      - if @static_data[:weapons]
-        %label{class: "checkbox inline", for: "weapons-all"}
-          %input{type: "checkbox", class: "weapons-all-cb", name: "weapons-all", value: "All", checked: "checked", id: "weapons-all"}
-          All
-        - @static_data[:weapons].each do |w|
-          %label{class: "checkbox inline", for: "w_#{w.id}"}
-            %input{type: "checkbox", class: "weapons-cb", name: "wn_#{w.id}", value: "#{w.id}", checked: "checked", id: "w_#{w.id}"}
-            #{w.name}
+    .navbar
+      .navbar-inner
+        .container
+          #weapons-detail
+            %a{class: "btn btn-navbar", "data-toggle" => "collapse", "data-target" => ".nav-collapse-weapons"}
+              %span.icon-bar
+              %span.icon-bar
+              %span.icon-bar
+            .nav-collapse.nav-collapse-weapons.collapse
+              - if @static_data[:weapons]
+                %label{class: "checkbox inline", for: "weapons-all"}
+                  %input{type: "checkbox", class: "weapons-all-cb", name: "weapons-all", value: "All", checked: "checked", id: "weapons-all"}
+                  All
+                - @static_data[:weapons].each do |w|
+                  %label{class: "checkbox inline", for: "w_#{w.id}"}
+                    %input{type: "checkbox", class: "weapons-cb", name: "wn_#{w.id}", value: "#{w.id}", checked: "checked", id: "w_#{w.id}"}
+                    #{w.name}
 
 #reasons
   .row-header Death Reasons
   %form{class: 'form-inline'}
     #reasons-detail
-      - if @static_data[:reasons]
-        %label{class: "checkbox inline", for: "reasons-all"}
-          %input{type: "checkbox", class: "reasons-all-cb", name: "reasons-all", value: "All", checked: "checked", id: "reasons-all"}
-          All
-      - @static_data[:reasons].each do |r|
-        %label{class: "checkbox inline", for: "r_#{r.id}"}
-          %input{type: "checkbox", class: "reasons-cb", name: "rn_#{r.id}", value: "#{r.id}", checked: "checked", id: "r_#{r.id}"}
-          #{r.name}
+      .navbar
+        .navbar-inner
+          .container
+            %a{class: "btn btn-navbar", "data-toggle" => "collapse", "data-target" => ".nav-collapse-reasons"}
+              %span.icon-bar
+              %span.icon-bar
+              %span.icon-bar
+            .nav-collapse.nav-collapse-reasons.collapse
+              - if @static_data[:reasons]
+                %label{class: "checkbox inline", for: "reasons-all"}
+                  %input{type: "checkbox", class: "reasons-all-cb", name: "reasons-all", value: "All", checked: "checked", id: "reasons-all"}
+                  All
+                - @static_data[:reasons].each do |r|
+                  %label{class: "checkbox inline", for: "r_#{r.id}"}
+                    %input{type: "checkbox", class: "reasons-cb", name: "rn_#{r.id}", value: "#{r.id}", checked: "checked", id: "r_#{r.id}"}
+                    #{r.name}
 
 
 #map

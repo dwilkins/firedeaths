@@ -12,7 +12,7 @@
   window.heat_data = []
   window.weapons_cb = []
   window.marker_titles = []
-
+  window.marker_popup = ""
   L.Projection.Identity =
     project: (latlng) =>
       return new L.Point latlng.lat, latlng.lng
@@ -46,6 +46,10 @@
       for a in this._icon.attributes when a
         if a.name == "title"
           a.value = a.nodeValue = a.textContent = title
+    getTitle: =>
+      for a in this._icon.attributes when a
+        if a.name == "title"
+          return a.value
 
   map_init = ->
     sc =
@@ -119,6 +123,9 @@
       .setContent("You clicked the map at " + e.latlng.toString())
       .openOn(window.map)
 
+
+    window.marker_popup = new L.Popup()
+
 # Debugging map points...
 #    map.on 'click', onMapClick
 
@@ -179,7 +186,15 @@
         detail_data: heat_data_point
       if !bi.old_base_total || bi.old_base_total != base_total
         if !window.heat_spots[bi.base.id]
-          window.heat_spots[bi.base.id] = new DeathMarker([bi.base.game_lat, bi.base.game_lon],{icon: heat_marker, opacity: .5,zIndex: 50, title: "#{bi.base.name}\nDeaths: #{base_total}"}).addTo(window.map)
+          window.heat_spots[bi.base.id] = new DeathMarker([bi.base.game_lat, bi.base.game_lon],{
+            icon: heat_marker
+            opacity: .5
+            zIndex: 50
+            clickable: true
+            title: "#{bi.base.name}\nDeaths: #{base_total}"
+          }).addTo(window.map)
+          window.heat_spots[bi.base.id].on 'click', (e)  =>
+            window.map.openPopup window.marker_popup.setLatLng(e.target.getLatLng()).setContent(e.target.getTitle().replace("\n","<br/>"))
         else
           window.heat_spots[bi.base.id].setTitle bi.base.name + "\nDeaths: " + base_total
         bi.old_base_total = base_total
